@@ -40,11 +40,11 @@ export const useApp = () => {
 
     const redirectToReport = () => {
         if (isSysco.value) {
-            window.open(`${ import.meta.env.CT_QUESTIONNAIRETOOL_COMPONENT_URL }/HTML/ReportEIR.html?QuestionnaireID${ questionnaireId.value }&LanguageID=${ languageId }`, '_blank');
+            window.open(`${ import.meta.env.CT_QUESTIONNAIRETOOL_COMPONENT_URL }/HTML/ReportEIR.html?QuestionnaireID=${ questionnaireId.value }&LanguageID=${ languageId }`, '_blank');
             return;
         }
         
-        window.open(`${ import.meta.env.CT_QUESTIONNAIRETOOL_COMPONENT_URL }/HTML/Report2.html?QuestionnaireID${ questionnaireId.value }&LanguageID=${ languageId }`, '_blank');
+        window.open(`${ import.meta.env.CT_QUESTIONNAIRETOOL_COMPONENT_URL }/HTML/Report2.html?QuestionnaireID=${ questionnaireId.value }&LanguageID=${ languageId }`, '_blank');
     }
 
     return {
@@ -57,7 +57,7 @@ export const useApp = () => {
             if (questionnaireId.value.toString().trim().length === 0) return;
             if (questionnaireId.value === 0) return;
 
-            const res = await encryptId(questionnaireId.value);
+            questionnaireId.value = await encryptId(questionnaireId.value);
             redirectToReport();
         },
     }

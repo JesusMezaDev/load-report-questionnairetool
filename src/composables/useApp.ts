@@ -7,7 +7,7 @@ export const useApp = () => {
         ok: true,
         message: '',
     });
-    const questionnaireId = ref<number>();
+    const questionnaireId = ref<number | null>(null);
     const isSysco = ref<boolean>(false);
     const disableButtonSearch = ref<boolean>(false);
 
@@ -24,6 +24,7 @@ export const useApp = () => {
         try {
             const { data } = await azzuleApi.get(`Encrypt?texto=${ id }`);
             const { Data } = data;
+            questionnaireId.value = null;
             return Data.NEW;
         } catch (error) {
             result.value = {
@@ -52,7 +53,8 @@ export const useApp = () => {
         questionnaireId,
         result,
         findQuestionnaire: async () => {
-            if (questionnaireId.value?.toString().trim().length === 0) return;
+            if (!questionnaireId.value) return;
+            if (questionnaireId.value.toString().trim().length === 0) return;
             if (questionnaireId.value === 0) return;
 
             const res = await encryptId(questionnaireId.value);
